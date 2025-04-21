@@ -48,7 +48,6 @@ class Customer(models.Model):
     name = models.CharField(max_length=100)
     locality = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
-    zipcode = models.IntegerField()
     state = models.CharField(max_length=100,choices=STATE_CHOICES)
 
 CATEGORY_CHOICE = (
@@ -72,9 +71,12 @@ class Product(models.Model):
         return str (self.id)
     
 class Cart(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return str (self.customer)
 
 
 STATUS_CHOICES = (
